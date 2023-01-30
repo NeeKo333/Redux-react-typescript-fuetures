@@ -4,6 +4,7 @@ export interface TodoState {
   error: null | string;
   page: number;
   limit: number;
+  headers?: any;
 }
 
 export enum TodoActionTypes {
@@ -19,6 +20,7 @@ interface FetchingTodo {
 interface FetchingTodoSuccessAction {
   type: TodoActionTypes.FETCH_TODO_SUCCESS;
   payload: any[];
+  headers?: any;
 }
 interface FetchingTodoErrorAction {
   type: TodoActionTypes.FETCH_TODO_ERROR;
@@ -27,6 +29,7 @@ interface FetchingTodoErrorAction {
 interface SetTodoPage {
   type: TodoActionTypes.SET_TODO_PAGE;
   payload: number;
+  headers?: any;
 }
 
 export type TodoAction =
