@@ -11,34 +11,47 @@ const TodoList = () => {
     store.dispatch(fetchTodo(page, limit));
   }, [page]);
 
-  const pageCount = useMemo(
-    () => Math.ceil(+headers?.["x-total-count"] / limit),
-    [headers]
-  );
+  //   const pageCount = useMemo(
+  //     () => Math.ceil(+headers?.["x-total-count"] / limit),
+  //     [headers]
+  //   );
 
-  const pages = (() => {
+  const pages = useMemo(() => {
+    const pageCount = Math.ceil(+headers?.["x-total-count"] / limit);
     const result = [];
     for (let i = 1; i <= pageCount; i++) {
       result.push(i);
     }
     return result;
-  })();
-
-  if (loading) return <h1>loading!</h1>;
+  }, []);
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        {todo &&
-          todo.map((el) => (
-            <p>
-              {el.id}
-              {el.title}
-            </p>
-          ))}
-      </div>
-      <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-        {pageCount &&
+      {!loading ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {todo &&
+            todo.map((el) => (
+              <p>
+                {el.id}
+                {el.title}
+              </p>
+            ))}
+        </div>
+      ) : (
+        <h1>loading...</h1>
+      )}
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: "45%",
+          left: "35%",
+          display: "flex",
+          gap: "10px",
+          justifyContent: "center",
+        }}
+      >
+        {pages &&
           pages.map((el, index) => (
             <button
               onClick={() => {
